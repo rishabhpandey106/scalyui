@@ -1,0 +1,80 @@
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import { QrCode, Download } from 'lucide-react';
+import Button from './Button';
+import { getQrviaCode } from '@/lib/api';
+
+interface QRCardProps {
+  code: string;
+}
+
+export default function QRCard({ code }: QRCardProps) {
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [qrUrl, setQrUrl] = useState<string | null>(null);
+
+  const handleGenerate = async () => {
+    setIsGenerating(true);
+    try {
+      // Assuming GET /api/v1/qr/:code returns { qr: "data:image/png;base64,..." }
+      // Or we can just use an img tag pointing to the endpoint directly if it returns image/png
+      // Let's assume it returns a base64 JSON response for better control
+      const res = await getQrviaCode(code);
+      setQrUrl(res);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const handleDownload = () => {
+    if (!qrUrl) return;
+    const a = document.createElement('a');
+    a.href = qrUrl;
+    a.download = `scaly-qr-${code}.png`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (qrUrl) {
+        URL.revokeObjectURL(qrUrl);
+      }
+    };
+  }, [qrUrl]);
+
+  return (
+    <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-sm flex flex-col h-full">
+      <div className="flex items-center gap-2 mb-6">
+        <QrCode className="text-accent" />
+        <h3 className="font-semibold text-lg">QR Code</h3>
+      </div>
+
+      <div className="flex-1 flex flex-col items-center justify-center">
+        {qrUrl ? (
+          <div className="flex flex-col items-center gap-6">
+            <div className="bg-white p-4 rounded-xl shadow-inner">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={qrUrl} alt="QR Code" className="w-48 h-48" />
+            </div>
+            <Button onClick={handleDownload} className="flex items-center gap-2 max-w-50">
+              <Download size={18} /> Download
+            </Button>
+          </div>
+        ) : (
+          <div className="text-center">
+            <p className="text-zinc-500 mb-6 text-sm max-w-62.5 mx-auto">
+              Generate a custom QR code for your shortened URL to share offline.
+            </p>
+            <Button onClick={handleGenerate} isLoading={isGenerating} className="max-w-50 mx-auto">
+              Generate QR
+            </Button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
