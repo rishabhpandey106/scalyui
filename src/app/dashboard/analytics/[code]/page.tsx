@@ -7,6 +7,7 @@ import { ArrowLeft, MousePointerClick, Globe, Monitor, Calendar } from 'lucide-r
 import { getAnalytics } from '@/lib/api';
 import StatsCard from '@/components/StatsCard';
 import QRCard from '@/components/QRCard';
+import ChartSection from '@/components/ChartSection';
 
 interface ClickEvent {
   clicked_at: string;
@@ -126,8 +127,12 @@ export default function AnalyticsPage({ params }: { params: Promise<{ code: stri
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div className="lg:col-span-2 bg-zinc-900 border border-zinc-800 rounded-2xl p-6 h-100 flex items-center justify-center">
-                  <p className="text-zinc-500">Detailed charts coming soon in Pro version.</p>
+                <div className="lg:col-span-2">
+                  <ChartSection 
+                    daily={data?.daily} 
+                    hourly={data?.hourly} 
+                    weekly={data?.weekly} 
+                  />
                 </div>
                 <div>
                   <QRCard code={code} />
