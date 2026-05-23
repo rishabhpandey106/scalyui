@@ -1,10 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { Copy, Trash2, BarChart2, ExternalLink, CheckCircle2 } from 'lucide-react';
 import { deleteUrl } from '@/lib/api';
 import toast from 'react-hot-toast';
+import { LinkPreview } from './ui/link-preview';
 
 export interface UrlItem {
   ShortCode: string;
@@ -69,22 +70,23 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
   return (
     <div className="space-y-4">
       {urls.map((url, index) => (
-        
+
         <div
           key={url.ShortCode ?? index}
           className="bg-zinc-900 border border-zinc-800 rounded-xl p-4 sm:p-6 hover:border-zinc-700 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-4"
         >
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-3 mb-1">
-              <a
-                href={url.ShortURL}
+              <LinkPreview
+                url={url.LongURL}
+                live={url.ShortURL}
                 target="_blank"
-                rel="noreferrer"
+                // rel="noreferrer"
                 className="text-accent font-semibold text-lg hover:underline flex items-center gap-2 truncate"
               >
-                {url.ShortURL ? url.ShortURL.replace(/^https?:\/\//, '') : 'Invalid URL'}
+                <span className="text-zinc-400">scaly.itsrishabh.tech/<span className="text-accent">{url.ShortCode}</span></span>
                 <ExternalLink size={14} className="opacity-50" />
-              </a>
+              </LinkPreview>
             </div>
             <p className="text-zinc-500 text-sm truncate" title={url.LongURL}>
               {url.LongURL}
@@ -113,7 +115,12 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
               </button>
 
               <Link
-                href={`/dashboard/analytics/${url.ShortCode}`}
+                href={{
+                  pathname: `/dashboard/analytics/${url.ShortCode}`,
+                  query: {
+                    createdAt: url.CreatedAt,
+                  },
+                }}
                 className="p-2 bg-zinc-950 border border-zinc-800 rounded-lg hover:bg-zinc-800 transition-colors text-zinc-400 hover:text-accent"
                 title="Analytics"
               >
@@ -131,7 +138,8 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
             </div>
           </div>
         </div>
-      ))}
-    </div>
+      ))
+      }
+    </div >
   );
 }

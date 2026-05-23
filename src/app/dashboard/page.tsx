@@ -7,6 +7,7 @@ import { getUserUrls } from '@/lib/api';
 import UrlForm from '@/components/UrlForm';
 import UrlTable, { UrlItem } from '@/components/UrlTable';
 import toast from 'react-hot-toast';
+import { SquigglyText } from '@/components/ui/squiggly-text';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -39,7 +40,14 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-black text-white p-4 sm:p-8">
       <div className="max-w-5xl mx-auto">
         <header className="flex justify-between items-center mb-8 border-b border-zinc-800 pb-6">
-          <div className="text-2xl font-bold text-accent tracking-tight">Scaly</div>
+          <div className="text-2xl font-bold text-accent tracking-tight">
+            <SquigglyText
+              scale={2}
+              className="text-accent"
+            >
+              Scaly
+            </SquigglyText>
+          </div>
           <button
             onClick={logout}
             className="text-sm px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors"

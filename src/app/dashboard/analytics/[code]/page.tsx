@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useEffect, useState, use } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, MousePointerClick, Globe, Monitor, Calendar } from 'lucide-react';
 import { getAnalytics } from '@/lib/api';
 import StatsCard from '@/components/StatsCard';
 import QRCard from '@/components/QRCard';
 import ChartSection from '@/components/ChartSection';
+import TopList from '@/components/TopList';
 
 interface ClickEvent {
   clicked_at: string;
@@ -31,6 +32,8 @@ interface AnalyticsData {
 
 export default function AnalyticsPage({ params }: { params: Promise<{ code: string }> }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const createdAt = searchParams.get('createdAt');
   const { code } = use(params);
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -67,7 +70,7 @@ export default function AnalyticsPage({ params }: { params: Promise<{ code: stri
             <div>
               <h1 className="text-3xl font-bold">Analytics</h1>
               <p className="text-zinc-500 mt-1 flex items-center gap-2">
-                scaly.in/{code}
+                scaly.itsrishabh.tech/{code}
               </p>
             </div>
             {data?.short_code && (
@@ -115,13 +118,7 @@ export default function AnalyticsPage({ params }: { params: Promise<{ code: stri
                 />
                 <StatsCard
                   title="Created"
-                  value={
-                    data?.clicks?.length
-                      ? new Date(
-                        Math.min(...data.clicks.map(c => new Date(c.clicked_at).getTime()))
-                      ).toLocaleDateString()
-                      : '-'
-                  }
+                  value={createdAt ? new Date(createdAt).toLocaleDateString() : 'Unknown'}
                   icon={<Calendar size={24} />}
                 />
               </div>
@@ -137,6 +134,23 @@ export default function AnalyticsPage({ params }: { params: Promise<{ code: stri
                 <div>
                   <QRCard code={code} />
                 </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+                <TopList 
+                  title="Top Countries" 
+                  data={data?.countries} 
+                  emptyMessage="No country data available"
+                />
+                <TopList 
+                  title="Top Referrers" 
+                  data={data?.clicks?.reduce((acc: Record<string, number>, click) => {
+                    const ref = click.referrer || 'Direct / Unknown';
+                    acc[ref] = (acc[ref] || 0) + 1;
+                    return acc;
+                  }, {})}
+                  emptyMessage="No referrer data available"
+                />
               </div>
             </>
           )}
