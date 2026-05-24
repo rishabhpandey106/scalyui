@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { Copy, Trash2, BarChart2, ExternalLink, CheckCircle2 } from 'lucide-react';
+import { Copy, Trash2, BarChart2, ExternalLink, CheckCircle2, Search, SlidersHorizontal } from 'lucide-react';
 import { deleteUrl } from '@/lib/api';
 import toast from 'react-hot-toast';
 import { LinkPreview } from './ui/link-preview';
@@ -24,6 +24,36 @@ interface UrlTableProps {
 export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) {
   const [deletingCode, setDeletingCode] = useState<string | null>(null);
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
+
+  const [search, setSearch] = useState('');
+  const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'most_clicks'>('newest');
+
+  const filteredAndSortedUrls = useMemo(() => {
+    let result = [...urls];
+
+    // Search filter
+    if (search.trim() !== '') {
+      const q = search.toLowerCase();
+      result = result.filter(url => 
+        (url.ShortCode && url.ShortCode.toLowerCase().includes(q)) || 
+        (url.LongURL && url.LongURL.toLowerCase().includes(q))
+      );
+    }
+
+    // Sort
+    result.sort((a, b) => {
+      if (sortBy === 'newest') {
+        return new Date(b.CreatedAt || 0).getTime() - new Date(a.CreatedAt || 0).getTime();
+      } else if (sortBy === 'oldest') {
+        return new Date(a.CreatedAt || 0).getTime() - new Date(b.CreatedAt || 0).getTime();
+      } else if (sortBy === 'most_clicks') {
+        return (b.Clicks || 0) - (a.Clicks || 0);
+      }
+      return 0;
+    });
+
+    return result;
+  }, [urls, search, sortBy]);
 
   const BASE_URL = 'https://scaly.itsrishabh.tech';
 
@@ -68,8 +98,41 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
   }
 
   return (
-    <div className="space-y-4">
-      {urls.map((url, index) => (
+    <div className="space-y-6">
+      {urls.length > 0 && (
+        <div className="flex flex-col sm:flex-row gap-4 mb-2 pb-6">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={18} />
+            <input
+              type="text"
+              placeholder="Search by alias or long URL..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 pl-10 pr-4 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all"
+            />
+          </div>
+          <div className="relative">
+            <SlidersHorizontal className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={16} />
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as any)}
+              className="appearance-none bg-zinc-950 border border-zinc-800 rounded-lg py-2 pl-10 pr-8 text-sm text-zinc-300 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all cursor-pointer"
+            >
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="most_clicks">Most Clicks</option>
+            </select>
+          </div>
+        </div>
+      )}
+
+      {filteredAndSortedUrls.length === 0 && urls.length > 0 ? (
+        <div className="bg-zinc-900/50 border border-zinc-800/50 rounded-2xl p-8 text-center text-zinc-500">
+          No URLs match your search.
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {filteredAndSortedUrls.map((url, index) => (
 
         <div
           key={url.ShortCode ?? index}
@@ -138,8 +201,9 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
             </div>
           </div>
         </div>
-      ))
-      }
-    </div >
+          ))}
+        </div>
+      )}
+    </div>
   );
 }

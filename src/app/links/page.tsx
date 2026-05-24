@@ -36,7 +36,7 @@ export default function LinksPage() {
   }, [fetchUrls]);
 
   return (
-    <div className="min-h-auto text-white bg-transparent">
+    <div className="min-h-auto text-white sm:pb-8 bg-transparent">
       <div className="max-w-5xl mx-auto">
         <header className="mb-8">
           <Link
