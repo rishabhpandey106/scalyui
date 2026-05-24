@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+
 const TOKEN_KEY = 'scaly_token';
 
 export const setToken = (token: string) => {
@@ -23,6 +25,7 @@ export const logout = () => {
   if (typeof window !== 'undefined') {
     // Clear the cookie by setting its expiration date to the past
     document.cookie = `${TOKEN_KEY}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax`;
+    toast.success('Logged out successfully!');
     window.location.href = '/login';
   }
 };

@@ -7,20 +7,21 @@ import Input from '@/components/Input';
 import Button from '@/components/Button';
 import { signup } from '@/lib/api';
 import { setToken } from '@/lib/auth';
+import toast from 'react-hot-toast';
 
 export default function SignupPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  // const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    // setError('');
 
     if (!email || !password) {
-      setError('Please fill in all fields');
+      toast.error('Please fill in all fields');
       return;
     }
 
@@ -29,12 +30,13 @@ export default function SignupPage() {
       const data = await signup(email, password);
       if (data.token) {
         setToken(data.token);
+        toast.success('Account created successfully!');
         router.push('/dashboard');
       } else {
         throw new Error('No token received');
       }
     } catch (err: any) {
-      setError(err.message || 'An error occurred during signup');
+      toast.error(err.message || 'An error occurred during signup');
     } finally {
       setIsLoading(false);
     }
@@ -48,11 +50,11 @@ export default function SignupPage() {
           <p className="text-zinc-400">Get started with Scaly</p>
         </div>
 
-        {error && (
+        {/* {error && (
           <div className="mb-6 p-3 bg-red-500/10 border border-red-500/20 rounded-md text-red-500 text-sm text-center">
             {error}
           </div>
-        )}
+        )} */}
 
         <form onSubmit={handleSubmit}>
           <Input
