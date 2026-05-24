@@ -24,7 +24,7 @@ export default function RedirectPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen bg-transparent flex flex-col items-center justify-center p-4">
         <div className="text-zinc-500 mb-6 text-xl">Link not found</div>
         <Link href="/" className="text-accent hover:underline">
           Go to Scaly
@@ -34,7 +34,7 @@ export default function RedirectPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-transparent flex flex-col items-center justify-center p-4">
       <Loader className="w-12 h-12 text-accent mb-6" />
       <p className="text-zinc-400 animate-pulse">Redirecting...</p>
     </div>

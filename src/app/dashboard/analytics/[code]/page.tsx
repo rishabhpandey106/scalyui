@@ -45,9 +45,9 @@ export default function AnalyticsPage({ params }: { params: Promise<{ code: stri
         const result = await getAnalytics(code);
         setData(result);
       } catch (err: any) {
-        if (err.message !== 'Unauthorized') {
+        // if (err.message !== 'Unauthorized') {
           setError(err.message || 'Failed to load analytics');
-        }
+        // }
       } finally {
         setIsLoading(false);
       }
@@ -57,14 +57,14 @@ export default function AnalyticsPage({ params }: { params: Promise<{ code: stri
   }, [code]);
 
   return (
-    <div className="min-h-screen bg-black text-white p-4 sm:p-8">
+    <div className="min-h-screen text-white sm:pb-16 bg-transparent">
       <div className="max-w-5xl mx-auto">
         <header className="mb-8">
           <Link
-            href="/dashboard"
+            href="/links"
             className="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors mb-6"
           >
-            <ArrowLeft size={16} /> Back to Dashboard
+            <ArrowLeft size={16} /> Back to Links
           </Link>
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>

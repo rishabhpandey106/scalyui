@@ -12,7 +12,7 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const isAuthPage = pathname === '/login' || pathname === '/signup';
-  const isDashboardRoute = pathname.startsWith('/dashboard');
+  const isProtectedRoute = pathname.startsWith('/dashboard') || pathname.startsWith('/links');
 
   if (isAuthPage) {
     if (token) {
@@ -22,7 +22,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (isDashboardRoute) {
+  if (isProtectedRoute) {
     if (!token) {
       // Redirect unauthenticated users to login instantly
       return NextResponse.redirect(new URL('/login', request.url));
@@ -44,6 +44,7 @@ export const config = {
      * But we only care about dashboard, login, and signup.
      */
     '/dashboard/:path*', 
+    '/links/:path*',
     '/login', 
     '/signup'
   ],

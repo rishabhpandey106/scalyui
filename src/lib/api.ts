@@ -67,9 +67,16 @@ export async function signup(email: string, password: string) {
 // NEW SaaS URL Shortener Endpoints
 // ----------------------------------------------------
 
-export async function shortenUrl(url: string, alias?: string) {
-  const payload: { url: string; alias?: string } = { url };
+export async function shortenUrl(url: string, alias?: string, expiry?: string) {
+  const payload: { url: string; alias?: string; expiry?: string } = { url };
   if (alias) payload.alias = alias;
+  if (expiry) {
+    try {
+      payload.expiry = new Date(expiry).toISOString();
+    } catch(e) {
+      payload.expiry = expiry;
+    }
+  }
 
   const res = await fetchWithAuth('/api/v1/shorten', {
     method: 'POST',
@@ -82,6 +89,31 @@ export async function shortenUrl(url: string, alias?: string) {
   }
 
   return res.json();
+}
+
+export async function generateQr(url: string, alias?: string, expiry?: string) {
+  const payload: { url: string; alias?: string; expiry?: string } = { url };
+  if (alias) payload.alias = alias;
+  if (expiry) {
+    try {
+      payload.expiry = new Date(expiry).toISOString();
+    } catch(e) {
+      payload.expiry = expiry;
+    }
+  }
+
+  const res = await fetchWithAuth('/api/v1/qr', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+  
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => null);
+    throw new Error(errorData?.message || 'Failed to generate QR');
+  }
+
+  const blob = await res.blob();
+  return URL.createObjectURL(blob);
 }
 
 export async function getUserUrls() {
@@ -124,12 +156,14 @@ export async function getAnalytics(code: string) {
   const res = await fetchWithAuth(`/api/v1/analytics/${code}`, {
     method: 'GET',
   });
+
+  const data = await res.json().catch(() => null);
   
   if (!res.ok) {
-    throw new Error('Failed to get analytics');
+    throw new Error(data?.error || 'Failed to get analytics');
   }
 
-  return res.json();
+  return data;
 }
 
 export async function getQrviaCode(code: string) {

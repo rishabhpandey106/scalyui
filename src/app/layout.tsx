@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import Footer from "@/components/Footer";
+import ShaderBackground from "@/components/ShaderBackground";
+import Header from '@/components/Header';
 import "./globals.css";
 
 const geistSans = Geist({
@@ -27,9 +30,19 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} dark`}
+      suppressHydrationWarning
     >
-      <body className="antialiased min-h-screen bg-black text-white selection:bg-accent selection:text-white">
-        {children}
+      <body className="antialiased min-h-screen flex flex-col text-white selection:bg-accent selection:text-white bg-black">
+        <ShaderBackground />
+        <div className="p-4 sm:p-8 bg-transparent">
+          <div className="max-w-5xl mx-auto">
+            <Header />
+          </div>
+        </div>
+        <div className="flex-1 flex flex-col z-0">
+          {children}
+        </div>
+        <Footer />
         <Toaster position="bottom-right" toastOptions={{
           style: {
             background: '#18181b', // zinc-900
