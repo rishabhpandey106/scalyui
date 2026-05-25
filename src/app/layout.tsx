@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import ShaderBackground from "@/components/ShaderBackground";
 import Header from '@/components/Header';
 import StructuredData from '@/components/StructuredData';
+import UmamiAnalytics from '@/components/analytics/UmamiAnalytics';
 import "./globals.css";
 
 const inter = Inter({
@@ -98,6 +99,7 @@ export default function RootLayout({
             border: '1px solid #27272a', // zinc-800
           }
         }} />
+        <UmamiAnalytics />
       </body>
     </html>
   );
