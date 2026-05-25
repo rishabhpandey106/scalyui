@@ -197,6 +197,7 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
                     onClick={() => handleCopy(url.ShortURL, url.ShortCode)}
                     className="p-2 bg-zinc-950 border border-zinc-800 rounded-lg hover:bg-zinc-800 transition-colors text-zinc-400 hover:text-white"
                     title="Copy"
+                    aria-label={`Copy short URL for ${url.ShortCode}`}
                   >
                     {copiedCode === url.ShortCode ? <CheckCircle2 size={18} className="text-accent" /> : <Copy size={18} />}
                   </button>
@@ -210,6 +211,7 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
                     }}
                     className="p-2 bg-zinc-950 border border-zinc-800 rounded-lg hover:bg-zinc-800 transition-colors text-zinc-400 hover:text-accent"
                     title="Analytics"
+                    aria-label={`View analytics for ${url.ShortCode}`}
                   >
                     <BarChart2 size={18} />
                   </Link>
@@ -219,6 +221,7 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
                     disabled={deletingCode === url.ShortCode}
                     className="p-2 bg-zinc-950 border border-zinc-800 rounded-lg hover:bg-zinc-800 transition-colors text-zinc-400 hover:text-red-500 disabled:opacity-50"
                     title="Delete"
+                    aria-label={`Delete short URL ${url.ShortCode}`}
                   >
                     <Trash2 size={18} />
                   </button>

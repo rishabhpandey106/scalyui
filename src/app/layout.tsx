@@ -4,6 +4,7 @@ import { Toaster } from "react-hot-toast";
 import Footer from "@/components/Footer";
 import ShaderBackground from "@/components/ShaderBackground";
 import Header from '@/components/Header';
+import StructuredData from '@/components/StructuredData';
 import "./globals.css";
 
 const inter = Inter({
@@ -17,11 +18,29 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://scalyui.itsrishabh.tech'),
   title: {
     default: "Scaly - Modern URL Shortener",
     template: "%s | Scaly"
   },
   description: "Scaly is a blazing fast, secure, and modern SaaS URL shortener and link management platform.",
+  keywords: [
+    "scaly", 
+    "scalyui", 
+    "url shortener", 
+    "link shortener", 
+    "link management", 
+    "custom short links", 
+    "qr code generator",
+    "click analytics",
+    "free url shortener",
+    "golang url shortener",
+    "scaly url shortener",
+    "scaly analytics",
+  ],
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     title: "Scaly - Modern URL Shortener",
     description: "Scaly is a blazing fast, secure, and modern SaaS URL shortener and link management platform.",
@@ -29,7 +48,7 @@ export const metadata: Metadata = {
     siteName: "Scaly",
     images: [
       {
-        url: "https://scalyui.itsrishabh.tech/og-image.png",
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Scaly URL Shortener Preview",
@@ -39,11 +58,11 @@ export const metadata: Metadata = {
     type: "website",
   },
   twitter: {
-    card: "summary_large_image", // Shows a large, rich preview image
+    card: "summary_large_image",
     title: "Scaly - Modern URL Shortener",
     description: "Scaly is a blazing fast, secure, and modern SaaS URL shortener and link management platform.",
-    images: ["https://scalyui.itsrishabh.tech/og-image.png"], // Same 1200x630px image
-    creator: "@18Rishabh", // Add your twitter handle if you have one
+    images: ["/og-image.png"],
+    creator: "@18Rishabh",
   },
 };
 
@@ -58,6 +77,9 @@ export default function RootLayout({
       className={`${inter.variable} ${spaceGrotesk.variable} dark`}
       suppressHydrationWarning
     >
+      <head>
+        <StructuredData />
+      </head>
       <body className="antialiased min-h-screen flex flex-col text-white selection:bg-accent selection:text-white bg-black">
         <ShaderBackground />
         <div className="p-4 sm:p-8 bg-transparent">

@@ -86,7 +86,7 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
   };
 
   return (
-    <div className="relative
+    <section className="relative
         bg-white/5
         backdrop-blur-xl
         border border-white/10
@@ -111,6 +111,7 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
             onChange={(e) => setUrl(e.target.value)}
             disabled={isSubmitting}
             required
+            aria-label="Destination URL"
             className="mb-0! bg-white/5 backdrop-blur-md border border-white/10 rounded-lg py-2 px-4 text-sm text-white/80 placeholder-white/30 focus:outline-none focus:border-white/20"
           />
         </div>
@@ -128,6 +129,7 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
                 value={alias}
                 onChange={(e) => setAlias(e.target.value)}
                 disabled={isSubmitting}
+                aria-label="Custom Alias"
                 className="mb-0! pr-10 bg-white/5 backdrop-blur-md border border-white/10 rounded-lg py-2 px-4 text-sm text-white/80 placeholder-white/30 focus:outline-none focus:border-white/20"
               />
               {alias && !isChecking && (
@@ -140,13 +142,13 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
                 </div>
               )}
               {isChecking && (
-                <div className="absolute right-3 top-3">
+                <div className="absolute right-3 top-3" aria-live="polite">
                   <div className="animate-spin rounded-full h-4 w-4 border-2 border-zinc-500 border-t-accent"></div>
                 </div>
               )}
             </div>
-            {aliasStatus === 'available' && <p className="text-accent text-xs mt-1">Alias is available!</p>}
-            {aliasStatus === 'taken' && <p className="text-red-500 text-xs mt-1">Alias is already taken</p>}
+            {aliasStatus === 'available' && <p className="text-accent text-xs mt-1" role="status">Alias is available!</p>}
+            {aliasStatus === 'taken' && <p className="text-red-500 text-xs mt-1" role="status">Alias is already taken</p>}
           </div>
 
           <div>
@@ -159,6 +161,7 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
               value={expiry}
               onChange={(e) => setExpiry(e.target.value)}
               disabled={isSubmitting}
+              aria-label="Expiry Date"
               className="custom-date-input mb-0! bg-white/5 backdrop-blur-md border border-white/10 rounded-lg py-2 px-4 text-sm text-white/80 placeholder-white/30 focus:outline-none focus:border-white/20"
             />
           </div>
@@ -171,6 +174,7 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
             isLoading={isSubmitting}
             disabled={aliasStatus === 'taken'}
             className="flex-1"
+            aria-label="Shorten URL button"
           >
             Shorten URL
           </Button>
@@ -179,6 +183,7 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
             onClick={() => handleSubmit('qr')}
             disabled={isSubmitting || aliasStatus === 'taken'}
             className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-lg font-medium text-white hover:bg-zinc-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            aria-label="Generate QR Code button"
           >
             <QrCode size={18} />
             Generate QR
@@ -187,7 +192,7 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
       </div>
 
       {result && (
-        <div className="mt-6 p-4 bg-zinc-950 border border-zinc-800 rounded-lg flex flex-col sm:flex-row items-center justify-between gap-4 animate-in fade-in slide-in-from-bottom-2">
+        <div className="mt-6 p-4 bg-zinc-950 border border-zinc-800 rounded-lg flex flex-col sm:flex-row items-center justify-between gap-4 animate-in fade-in slide-in-from-bottom-2" role="region" aria-label="Result">
           {result.shortUrl ? (
             <>
               <div>
@@ -205,6 +210,7 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
                 onClick={handleCopy}
                 className="p-2 bg-zinc-900 border border-zinc-800 rounded hover:bg-zinc-800 transition-colors shrink-0"
                 title="Copy to clipboard"
+                aria-label="Copy to clipboard"
               >
                 {copied ? <CheckCircle2 size={20} className="text-accent" /> : <Copy size={20} className="text-zinc-400" />}
               </button>
@@ -213,12 +219,13 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
             <div className="flex flex-col items-center justify-center w-full">
               <p className="text-sm text-zinc-400 mb-3">Your QR Code is ready:</p>
               <div className="bg-white p-2 rounded-xl">
-                <Image src={result.qrUrl} alt="Generated QR" width={200} height={200} className="rounded-lg" />
+                <Image src={result.qrUrl} alt="Generated QR code for your URL" width={200} height={200} className="rounded-lg" />
               </div>
               <a
                 href={result.qrUrl}
                 download="scaly-qr.png"
                 className="mt-4 text-sm text-accent hover:underline"
+                aria-label="Download QR Code"
               >
                 Download QR Code
               </a>
@@ -226,6 +233,6 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
           ) : null}
         </div>
       )}
-    </div>
+    </section>
   );
 }

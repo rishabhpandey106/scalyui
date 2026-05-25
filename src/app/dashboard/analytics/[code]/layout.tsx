@@ -12,10 +12,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: `Analytics for /${code}`,
-    description: `View real-time click analytics, locations, and referrer data for the shortened URL scaly.itsrishabh.tech/${code}.`,
+    description: `View real-time click analytics, locations, and referrer data for the shortened URL scalyui.itsrishabh.tech/${code}.`,
+    alternates: {
+      canonical: `https://scalyui.itsrishabh.tech/dashboard/analytics/${code}`,
+    },
     openGraph: {
       title: `Analytics for /${code} | Scaly`,
-      description: `View real-time click analytics, locations, and referrer data for the shortened URL scaly.itsrishabh.tech/${code}.`,
+      description: `View real-time click analytics, locations, and referrer data for the shortened URL scalyui.itsrishabh.tech/${code}.`,
       url: `https://scalyui.itsrishabh.tech/dashboard/analytics/${code}`,
       images: [
         {
@@ -30,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     twitter: {
       card: "summary_large_image",
       title: `Analytics for /${code} | Scaly`,
-      description: `View real-time click analytics, locations, and referrer data for the shortened URL scaly.itsrishabh.tech/${code}.`,
+      description: `View real-time click analytics, locations, and referrer data for the shortened URL scalyui.itsrishabh.tech/${code}.`,
       images: ["https://scalyui.itsrishabh.tech/og-analytics.png"],
     },
   };
