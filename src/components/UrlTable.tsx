@@ -55,7 +55,7 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
     return result;
   }, [urls, search, sortBy]);
 
-  const BASE_URL = 'https://scaly.itsrishabh.tech';
+  const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const handleCopy = (shortUrl: string, code: string) => {
     navigator.clipboard.writeText(shortUrl);
@@ -171,7 +171,7 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
                     // rel="noreferrer"
                     className="text-accent font-semibold text-lg hover:underline flex items-center gap-2 truncate min-w-0 w-full"
                   >
-                    <span className="text-zinc-400 truncate">scaly.itsrishabh.tech/<span className="text-accent">{url.ShortCode}</span></span>
+                    <span className="text-zinc-400 truncate">{BASE_URL}/<span className="text-accent">{url.ShortCode}</span></span>
                     <ExternalLink size={14} className="opacity-50 shrink-0" />
                   </LinkPreview>
                 </div>

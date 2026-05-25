@@ -90,15 +90,14 @@ export default function AnalyticsPage() {
 
       const deviceVendor = result.device.vendor || '';
       const deviceModel = result.device.model || '';
-      const deviceType = result.device.type || 'desktop';
+      const deviceType = result.device.type || 'Desktop';
 
       let device = 'Desktop';
 
       if (deviceVendor || deviceModel) {
         device = `${deviceVendor} ${deviceModel}`.trim();
       } else if (deviceType) {
-        device =
-          deviceType.charAt(0).toUpperCase() + deviceType.slice(1);
+        device = deviceType.charAt(0).toUpperCase() + deviceType.slice(1);
       }
 
       return {
@@ -108,7 +107,7 @@ export default function AnalyticsPage() {
         os,
         osVersion,
         device,
-        platform: deviceType,
+        platform: deviceType.charAt(0).toUpperCase() + deviceType.slice(1),
       };
     });
   }, [data]);
@@ -163,7 +162,7 @@ export default function AnalyticsPage() {
               <h1 className="text-3xl font-bold">Analytics</h1>
 
               <p className="text-zinc-500 mt-1 flex items-center gap-2">
-                scaly.itsrishabh.tech/{code}
+                {process.env.NEXT_PUBLIC_API_URL}/{code}
               </p>
             </div>
 

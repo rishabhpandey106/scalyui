@@ -20,7 +20,7 @@ export default function LinksPage() {
       const rawUrls = Array.isArray(data) ? data : data.urls || [];
       const formattedUrls = rawUrls.map((url: any) => ({
         ...url,
-        ShortURL: `https://scaly.itsrishabh.tech/${url.ShortCode}`,
+        ShortURL: `${process.env.NEXT_PUBLIC_API_URL}/${url.ShortCode}`,
       }));
       setUrls(formattedUrls);
     } catch (err: any) {

@@ -1,6 +1,6 @@
 import { getToken, logout } from './auth';
 
-const BASE_URL = 'http://localhost:8000';
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 async function fetchWithAuth(endpoint: string, options: RequestInit = {}) {
   const token = getToken();

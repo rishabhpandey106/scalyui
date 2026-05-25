@@ -4,8 +4,8 @@ const TOKEN_KEY = 'scaly_token';
 
 export const setToken = (token: string) => {
   if (typeof window !== 'undefined') {
-    // Set cookie to expire in 7 days, accessible across the site
-    document.cookie = `${TOKEN_KEY}=${token}; path=/; max-age=${7 * 24 * 60 * 60}; SameSite=Lax`;
+    // Set cookie to expire in 24 hours, accessible across the site
+    document.cookie = `${TOKEN_KEY}=${token}; path=/; max-age=${24 * 60 * 60}; SameSite=Lax`;
     // after login success
   }
 };
