@@ -149,7 +149,7 @@ export default function AnalyticsPage() {
     <div className="min-h-screen text-white sm:pb-16 bg-transparent">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <header className="mb-8">
+        <header className="mb-8 pl-4 sm:pl-0">
           <Link
             href="/links"
             className="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors mb-6"
@@ -172,7 +172,7 @@ export default function AnalyticsPage() {
                 href={data.short_code}
                 target="_blank"
                 rel="noreferrer"
-                className="text-sm text-accent hover:underline truncate max-w-75"
+                className="text-sm text-accent hover:underline truncate max-w-[200px] sm:max-w-[300px]"
                 title={data.short_code}
               >
                 {data.short_code}
@@ -186,7 +186,7 @@ export default function AnalyticsPage() {
           {isLoading ? (
             <>
               {/* Stats Cards Skeleton */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 pl-2 sm:pl-0">
                 {[1, 2, 3, 4].map((i) => (
                   <div
                     key={i}
@@ -200,7 +200,7 @@ export default function AnalyticsPage() {
           overflow-hidden
         "
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-40 animate-pulse" />
+                    <div className="absolute inset-0 bg-linear-to-br from-white/10 via-transparent to-transparent opacity-40 animate-pulse" />
                   </div>
                 ))}
               </div>
@@ -221,7 +221,7 @@ export default function AnalyticsPage() {
             overflow-hidden
           "
                     >
-                      <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-transparent to-white/5 opacity-30 animate-pulse" />
+                      <div className="absolute inset-0 bg-linear-to-r from-white/10 via-transparent to-white/5 opacity-30 animate-pulse" />
                     </div>
                   ))}
                 </div>
@@ -237,7 +237,7 @@ export default function AnalyticsPage() {
         overflow-hidden
       "
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-40 animate-pulse" />
+                  <div className="absolute inset-0 bg-linear-to-br from-white/10 via-transparent to-transparent opacity-40 animate-pulse" />
                 </div>
               </div>
 
@@ -256,7 +256,7 @@ export default function AnalyticsPage() {
           overflow-hidden
         "
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-white/5 opacity-30 animate-pulse" />
+                    <div className="absolute inset-0 bg-linear-to-br from-white/10 via-transparent to-white/5 opacity-30 animate-pulse" />
                   </div>
                 ))}
               </div>
@@ -276,7 +276,7 @@ export default function AnalyticsPage() {
           overflow-hidden
         "
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-40 animate-pulse" />
+                    <div className="absolute inset-0 bg-linear-to-br from-white/10 via-transparent to-transparent opacity-40 animate-pulse" />
                   </div>
                 ))}
               </div>
@@ -284,7 +284,7 @@ export default function AnalyticsPage() {
           ) : (
             <>
               {/* Stats Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 pl-2 sm:pl-0 pr-2 sm:pr-0">
                 <StatsCard
                   title="Total Clicks"
                   value={data?.total || 0}
@@ -319,7 +319,7 @@ export default function AnalyticsPage() {
               </div>
 
               {/* Charts + QR */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pl-2 sm:pl-0 pr-2 sm:pr-0">
                 <div className="lg:col-span-2">
                   <ChartSection
                     daily={data?.daily}
@@ -334,7 +334,7 @@ export default function AnalyticsPage() {
               </div>
 
               {/* Country + Referrer */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 pl-2 sm:pl-0 pr-2 sm:pr-0">
                 <TopList
                   title="Top Countries"
                   data={data?.countries}
@@ -349,7 +349,7 @@ export default function AnalyticsPage() {
               </div>
 
               {/* Device Analytics */}
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 mt-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 mt-8 pl-2 sm:pl-0 pr-2 sm:pr-0">
                 <TopList
                   title="Platforms"
                   data={platformStats}

@@ -33,7 +33,7 @@ export default function DashboardPage() {
           {/* <Header /> */}
 
           <main>
-            <div className="mb-10 flex flex-col sm:flex-row justify-between sm:items-end gap-4">
+            <div className="mb-10 flex flex-col sm:flex-row justify-between sm:items-end gap-4 pl-4 sm:pl-0">
               <div>
                 <h1 className="text-3xl font-extrabold mb-2">Create New</h1>
                 <p className="text-zinc-400">Create short links or generate QR codes instantly.</p>

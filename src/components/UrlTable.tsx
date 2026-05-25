@@ -111,7 +111,7 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pl-2 pr-2 sm:pl-0 sm:pr-0">
       {urls.length > 0 && (
         <div className="flex flex-col sm:flex-row gap-4 mb-2 pb-6">
           <div className="relative flex-1">
@@ -163,16 +163,16 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
             >
               <div className="absolute inset-0 rounded-xl bg-linear-to-br from-white/10 via-transparent to-transparent opacity-20 pointer-events-none" />
               <div className="flex-1 min-w-0 relative">
-                <div className="flex items-center gap-3 mb-1">
+                <div className="flex items-center gap-3 mb-1 min-w-0 w-full">
                   <LinkPreview
                     url={url.LongURL}
                     live={url.ShortURL}
                     target="_blank"
                     // rel="noreferrer"
-                    className="text-accent font-semibold text-lg hover:underline flex items-center gap-2 truncate"
+                    className="text-accent font-semibold text-lg hover:underline flex items-center gap-2 truncate min-w-0 w-full"
                   >
-                    <span className="text-zinc-400">scaly.itsrishabh.tech/<span className="text-accent">{url.ShortCode}</span></span>
-                    <ExternalLink size={14} className="opacity-50" />
+                    <span className="text-zinc-400 truncate">scaly.itsrishabh.tech/<span className="text-accent">{url.ShortCode}</span></span>
+                    <ExternalLink size={14} className="opacity-50 shrink-0" />
                   </LinkPreview>
                 </div>
                 <p className="text-zinc-500 text-sm truncate" title={url.LongURL}>

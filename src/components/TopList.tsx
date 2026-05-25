@@ -43,7 +43,7 @@ export default function TopList({
 
       <div className="relative flex-1">
         {sortedData.length === 0 ? (
-          <div className="flex items-center justify-center h-full min-h-37.5 text-white/40 text-sm">
+          <div className="flex items-center justify-center h-full min-h-[150px] text-white/40 text-sm">
             {emptyMessage}
           </div>
         ) : (

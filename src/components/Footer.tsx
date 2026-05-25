@@ -7,12 +7,12 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-5xl mx-auto border-t border-zinc-800 bg-black py-3 mt-auto">
+    <footer className="sm:max-w-5xl w-full mx-auto border-t border-zinc-800 bg-black py-3 mt-auto">
       <div className="max-w-5xl mx-auto px-4 sm:px-6">
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
 
-          <div>
+          <div className="text-center md:text-left">
             <h2 className="text-lg font-bold text-accent">Scaly</h2>
 
             <p className="text-zinc-600 text-xs mt-2">

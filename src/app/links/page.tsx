@@ -38,7 +38,7 @@ export default function LinksPage() {
   return (
     <div className="min-h-auto text-white sm:pb-8 bg-transparent">
       <div className="max-w-5xl mx-auto">
-        <header className="mb-8">
+        <header className="mb-8 pl-4 sm:pl-0">
           <Link
             href="/dashboard"
             className="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors mb-6"
@@ -50,7 +50,7 @@ export default function LinksPage() {
               <h1 className="text-3xl font-extrabold mb-2">Your Links</h1>
               <p className="text-zinc-500">Manage, track, and edit your shortened URLs.</p>
             </div>
-            <div className="text-sm text-zinc-400 bg-zinc-900 px-4 py-2 rounded-full border border-zinc-800">
+            <div className="sm:text-sm text-xs text-zinc-400 bg-zinc-900 px-4 py-2 rounded-full border border-zinc-800">
               {urls.length} total link{urls.length !== 1 ? 's' : ''}
             </div>
           </div>
