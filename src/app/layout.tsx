@@ -17,8 +17,34 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Scaly",
-  description: "Modern SaaS Application",
+  title: {
+    default: "Scaly - Modern URL Shortener",
+    template: "%s | Scaly"
+  },
+  description: "Scaly is a blazing fast, secure, and modern SaaS URL shortener and link management platform.",
+  openGraph: {
+    title: "Scaly - Modern URL Shortener",
+    description: "Scaly is a blazing fast, secure, and modern SaaS URL shortener and link management platform.",
+    url: "https://scalyui.itsrishabh.tech",
+    siteName: "Scaly",
+    images: [
+      {
+        url: "https://scalyui.itsrishabh.tech/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Scaly URL Shortener Preview",
+      }
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image", // Shows a large, rich preview image
+    title: "Scaly - Modern URL Shortener",
+    description: "Scaly is a blazing fast, secure, and modern SaaS URL shortener and link management platform.",
+    images: ["https://scalyui.itsrishabh.tech/og-image.png"], // Same 1200x630px image
+    creator: "@18Rishabh", // Add your twitter handle if you have one
+  },
 };
 
 export default function RootLayout({
