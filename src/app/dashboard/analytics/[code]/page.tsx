@@ -17,6 +17,7 @@ import StatsCard from '@/components/StatsCard';
 import QRCard from '@/components/QRCard';
 import ChartSection from '@/components/ChartSection';
 import TopList from '@/components/TopList';
+import Image from 'next/image';
 
 interface ClickEvent {
   clicked_at: string;
@@ -143,6 +144,29 @@ export default function AnalyticsPage() {
       return acc;
     }, {});
   }, [parsedClicks]);
+
+  if (error) {
+    return (
+      <div className="min-h-auto flex items-center justify-center bg-linear-to-br px-4 py-8">
+
+        <div className="backdrop-blur-xl bg-white/5 border border-green-500/20 shadow-[0_0_40px_rgba(34,197,94,0.15)] rounded-2xl p-6 md:p-10 flex flex-col items-center gap-5 max-w-md w-full">
+
+          <div className="relative">
+            <Image
+              src="/deny.png"
+              alt="Access Denied"
+              width={300}
+              height={300}
+              className="rounded-xl object-contain"
+            />
+
+            {/* glow effect */}
+            <div className="absolute inset-0 blur-2xl bg-green-500/10 rounded-full" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen text-white sm:pb-16 bg-transparent">

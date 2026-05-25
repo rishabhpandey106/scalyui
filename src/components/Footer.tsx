@@ -31,7 +31,7 @@ export default function Footer() {
             </Link>
 
             <Link
-              href="https://github.com/rishabhpandey106/scaly"
+              href="https://github.com/rishabhpandey106"
               target="_blank"
               className="hover:text-white transition-colors"
               title="GitHub"
