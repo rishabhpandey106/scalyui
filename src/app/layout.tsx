@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Space_Grotesk } from 'next/font/google';
 import { Toaster } from "react-hot-toast";
 import Footer from "@/components/Footer";
 import ShaderBackground from "@/components/ShaderBackground";
 import Header from '@/components/Header';
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-grotesk',
 });
 
 export const metadata: Metadata = {
@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} dark`}
+      className={`${inter.variable} ${spaceGrotesk.variable} dark`}
       suppressHydrationWarning
     >
       <body className="antialiased min-h-screen flex flex-col text-white selection:bg-accent selection:text-white bg-black">

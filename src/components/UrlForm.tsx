@@ -15,7 +15,7 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
   const [isChecking, setIsChecking] = useState(false);
   const [aliasStatus, setAliasStatus] = useState<'available' | 'taken' | 'idle'>('idle');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   const [result, setResult] = useState<{ shortUrl?: string; code?: string; qrUrl?: string } | null>(null);
   const [copied, setCopied] = useState(false);
 
@@ -32,7 +32,7 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
         const res = await checkAlias(alias);
         setAliasStatus(res.available ? 'available' : 'taken');
       } catch (err) {
-        setAliasStatus('taken'); 
+        setAliasStatus('taken');
       } finally {
         setIsChecking(false);
       }
@@ -63,7 +63,7 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
         setResult({ qrUrl: qrBlobUrl });
         toast.success('QR Code generated successfully!');
       }
-      
+
       setUrl('');
       setAlias('');
       setExpiry('');
@@ -86,8 +86,19 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
   };
 
   return (
-    <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-6 shadow-xl mb-8 relative z-10">
-      <div className="flex flex-col gap-4">
+    <div className="relative
+        bg-white/5
+        backdrop-blur-xl
+        border border-white/10
+        rounded-2xl
+        p-6
+        shadow-lg
+        mb-8
+        z-10
+        hover:border-white/20
+        transition-all">
+      <div className="absolute inset-0 rounded-2xl bg-linear-to-br from-white/10 via-transparent to-transparent opacity-30 pointer-events-none" />
+      <div className="relative flex flex-col gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-300 mb-1 flex items-center gap-2">
             <LinkIcon size={16} /> Destination URL
@@ -100,7 +111,7 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
             onChange={(e) => setUrl(e.target.value)}
             disabled={isSubmitting}
             required
-            className="!mb-0"
+            className="mb-0! bg-white/5 backdrop-blur-md border border-white/10 rounded-lg py-2 px-4 text-sm text-white/80 placeholder-white/30 focus:outline-none focus:border-white/20"
           />
         </div>
 
@@ -117,7 +128,7 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
                 value={alias}
                 onChange={(e) => setAlias(e.target.value)}
                 disabled={isSubmitting}
-                className="mb-0! pr-10"
+                className="mb-0! pr-10 bg-white/5 backdrop-blur-md border border-white/10 rounded-lg py-2 px-4 text-sm text-white/80 placeholder-white/30 focus:outline-none focus:border-white/20"
               />
               {alias && !isChecking && (
                 <div className="absolute right-3 top-3">
@@ -148,24 +159,24 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
               value={expiry}
               onChange={(e) => setExpiry(e.target.value)}
               disabled={isSubmitting}
-              className="custom-date-input mb-0!"
+              className="custom-date-input mb-0! bg-white/5 backdrop-blur-md border border-white/10 rounded-lg py-2 px-4 text-sm text-white/80 placeholder-white/30 focus:outline-none focus:border-white/20"
             />
           </div>
         </div>
 
         <div className="mt-4 flex flex-col sm:flex-row gap-3">
-          <Button 
-            type="button" 
-            onClick={() => handleSubmit('shorten')} 
-            isLoading={isSubmitting} 
+          <Button
+            type="button"
+            onClick={() => handleSubmit('shorten')}
+            isLoading={isSubmitting}
             disabled={aliasStatus === 'taken'}
             className="flex-1"
           >
             Shorten URL
           </Button>
-          <button 
+          <button
             type="button"
-            onClick={() => handleSubmit('qr')} 
+            onClick={() => handleSubmit('qr')}
             disabled={isSubmitting || aliasStatus === 'taken'}
             className="flex-1 flex items-center justify-center gap-2 px-4 py-2 bg-zinc-800 border border-zinc-700 rounded-lg font-medium text-white hover:bg-zinc-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
@@ -181,16 +192,16 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
             <>
               <div>
                 <p className="text-sm text-zinc-400 mb-1">Your shortened URL is ready:</p>
-                <a 
-                  href={result.shortUrl} 
-                  target="_blank" 
-                  rel="noreferrer" 
+                <a
+                  href={result.shortUrl}
+                  target="_blank"
+                  rel="noreferrer"
                   className="text-accent font-medium hover:underline break-all"
                 >
                   {result.shortUrl}
                 </a>
               </div>
-              <button 
+              <button
                 onClick={handleCopy}
                 className="p-2 bg-zinc-900 border border-zinc-800 rounded hover:bg-zinc-800 transition-colors shrink-0"
                 title="Copy to clipboard"
@@ -204,8 +215,8 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
               <div className="bg-white p-2 rounded-xl">
                 <Image src={result.qrUrl} alt="Generated QR" width={200} height={200} className="rounded-lg" />
               </div>
-              <a 
-                href={result.qrUrl} 
+              <a
+                href={result.qrUrl}
                 download="scaly-qr.png"
                 className="mt-4 text-sm text-accent hover:underline"
               >
