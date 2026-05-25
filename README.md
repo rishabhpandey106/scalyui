@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Scaly - Modern URL Shortener & Analytics Platform
 
-## Getting Started
+![Scaly Banner](/public/og-image.png)
 
-First, run the development server:
+**Scaly** is a blazing-fast, secure, and modern SaaS URL shortener and link management platform. Built with cutting-edge web technologies, Scaly allows you to create custom short links, generate QR codes, and track in-depth analytics for your audience in real-time.
 
+🌐 **Live Frontend**: [https://scalyui.itsrishabh.tech](https://scalyui.itsrishabh.tech)  
+⚙️ **Backend API**: [https://scaly.itsrishabh.tech](https://scaly.itsrishabh.tech)
+
+---
+
+## ✨ Features
+
+- **Custom Short Links**: Create branded and memorable short aliases for your long URLs.
+- **Link Expirations**: Set automatic expiration dates (`RFC 3339`) for your links so they deactivate precisely when you want them to.
+- **QR Code Generation**: Instantly generate downloadable QR codes for your short URLs.
+- **Advanced Analytics Dashboard**: Track your link performance with highly responsive area charts.
+  - View data by **Hourly**, **Daily**, or **Weekly** timeframes.
+  - Track **Top Countries**, **Top Referrers**, **Browsers**, **Operating Systems**, and **Devices**.
+- **Link Management**: A dedicated `/links` dashboard with high-performance real-time search and sorting (Newest, Oldest, Most Clicks).
+- **SEO & Social Sharing Optimized**: Fully integrated Open Graph (OG) tags, Twitter Cards, dynamic `sitemap.xml`, and JSON-LD schema markup.
+- **Fully Responsive**: Beautifully optimized for both Desktop and Mobile devices using dynamic layouts.
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Charts**: [Recharts](https://recharts.org/)
+- **User Agent Parsing**: `ua-parser-js`
+- **Link Previews**: `microlink.io` & Radix UI Hover Cards
+- **Notifications**: `react-hot-toast`
+
+### Infrastructure
+- **Deployment**: Vercel (Frontend)
+- **Architecture**: Next.js Server Components, API routes proxying, and fully typed TypeScript.
+
+---
+
+## 🚀 Getting Started (Local Development)
+
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
+
+### 1. Clone the Repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/rishabhpandey106/scalyui.git
+cd scalyui
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install Dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Environment Variables
+Create a `.env.local` file in the root of the project and define your backend API URL:
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```
+*(If left undefined, it will safely fallback to the production backend `https://scaly.itsrishabh.tech`)*
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4. Run the Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the application running.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📈 Analytics Engine
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Scaly's analytics engine processes thousands of data points to generate rich insights. The frontend leverages `useMemo` hooks and the `recharts` library to perform lightning-fast client-side data aggregations (converting raw click data into beautifully mapped area charts) without lagging the UI.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 👨‍💻 Author
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Rishabh Pandey**
+- Twitter: [@18Rishabh](https://twitter.com/18Rishabh)
+- Instagram: [@rishabhpandey___](https://instagram.com/rishabhpandey___)
+- GitHub: [rishabhpandey106](https://github.com/rishabhpandey106)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
