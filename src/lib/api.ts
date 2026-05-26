@@ -46,6 +46,21 @@ export async function login(email: string, password: string) {
   return res.json();
 }
 
+export async function loginWithGoogle(credential: string) {
+  const res = await fetch(`${BASE_URL}/auth/google`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token: credential }),
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => null);
+    throw new Error(errorData?.message || 'Google Login failed');
+  }
+
+  return res.json();
+}
+
 export async function signup(email: string, password: string) {
   await new Promise((resolve) => setTimeout(resolve, 800));
 
@@ -85,7 +100,7 @@ export async function shortenUrl(url: string, alias?: string, expiry?: string) {
   
   if (!res.ok) {
     const errorData = await res.json().catch(() => null);
-    throw new Error(errorData?.message || 'Failed to shorten URL');
+    throw new Error(errorData?.error || 'Failed to shorten URL');
   }
 
   return res.json();

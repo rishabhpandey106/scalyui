@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import ShaderBackground from "@/components/ShaderBackground";
 import Header from '@/components/Header';
 import StructuredData from '@/components/StructuredData';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import UmamiAnalytics from '@/components/analytics/UmamiAnalytics';
 import "./globals.css";
 
@@ -20,9 +21,6 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://scalyui.itsrishabh.tech'),
-  verification: {
-    google: "aFgROXjTSznluBIsgPA92-NGAd3oJX-txnsvHaxRP2U",
-  },
   title: {
     default: "Scaly - Modern URL Shortener",
     template: "%s | Scaly"
@@ -42,6 +40,12 @@ export const metadata: Metadata = {
     "scaly url shortener",
     "scaly analytics",
   ],
+  verification: {
+    google: [
+      "uwHjxzHO6AdnsQKQ1Q9WyjzH_PfiYImzYjYYkTPhYN8",
+      "aFgROXjTSznluBIsgPA92-NGAd3oJX-txnsvHaxRP2U"
+    ]
+  },
   alternates: {
     canonical: '/',
   },
@@ -75,6 +79,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || '';
+
   return (
     <html
       lang="en"
@@ -85,24 +91,26 @@ export default function RootLayout({
         <StructuredData />
       </head>
       <body className="antialiased min-h-screen flex flex-col text-white selection:bg-accent selection:text-white bg-black">
-        <ShaderBackground />
-        <div className="p-4 sm:p-8 bg-transparent">
-          <div className="max-w-5xl mx-auto">
-            <Header />
+        <GoogleOAuthProvider clientId={clientId}>
+          <ShaderBackground />
+          <div className="p-4 sm:p-8 bg-transparent">
+            <div className="max-w-5xl mx-auto">
+              <Header />
+            </div>
           </div>
-        </div>
-        <div className="flex-1 flex flex-col z-0">
-          {children}
-        </div>
-        <Footer />
-        <Toaster position="bottom-right" toastOptions={{
-          style: {
-            background: '#18181b', // zinc-900
-            color: '#fff',
-            border: '1px solid #27272a', // zinc-800
-          }
-        }} />
-        <UmamiAnalytics />
+          <div className="flex-1 flex flex-col z-0">
+            {children}
+          </div>
+          <Footer />
+          <Toaster position="bottom-right" toastOptions={{
+            style: {
+              background: '#18181b', // zinc-900
+              color: '#fff',
+              border: '1px solid #27272a', // zinc-800
+            }
+          }} />
+          <UmamiAnalytics />
+        </GoogleOAuthProvider>
       </body>
     </html>
   );

@@ -5,9 +5,10 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Input from '@/components/Input';
 import Button from '@/components/Button';
-import { signup } from '@/lib/api';
+import { signup, loginWithGoogle } from '@/lib/api';
 import { setToken } from '@/lib/auth';
 import toast from 'react-hot-toast';
+import { GoogleLogin } from '@react-oauth/google';
 
 export default function SignupPage() {
   const router = useRouter();
@@ -81,6 +82,42 @@ export default function SignupPage() {
             </Button>
           </div>
         </form>
+
+        <div className="mt-6 flex items-center justify-center space-x-2">
+          <span className="h-px bg-zinc-800 w-full"></span>
+          <span className="text-zinc-500 text-sm">OR</span>
+          <span className="h-px bg-zinc-800 w-full"></span>
+        </div>
+
+        <div className="mt-6 flex justify-center">
+          <GoogleLogin
+            onSuccess={async (credentialResponse) => {
+              if (!credentialResponse.credential) return;
+              
+              setIsLoading(true);
+              try {
+                const data = await loginWithGoogle(credentialResponse.credential);
+                if (data.token) {
+                  setToken(data.token);
+                  toast.success('Signed up with Google successfully!');
+                  router.push('/dashboard');
+                } else {
+                  throw new Error('No token received from backend');
+                }
+              } catch (err: any) {
+                toast.error(err.message || 'Google signup failed');
+              } finally {
+                setIsLoading(false);
+              }
+            }}
+            onError={() => {
+              toast.error('Google Signup Failed');
+            }}
+            theme="filled_black"
+            shape="rectangular"
+            text="signup_with"
+          />
+        </div>
 
         <p className="mt-6 text-center text-zinc-400 text-sm">
           Already have an account?{' '}

@@ -69,6 +69,13 @@ export default function ChartSection({
       <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <h3 className="font-semibold text-lg text-white">
           Click Analytics
+          <span className="text-white/40 text-sm">
+            {view === 'hourly'
+              ? ' (Last 24 Hours)'
+              : view === 'daily'
+              ? ' (Last 7 Days)'
+              : ' (Last 90 Days)'}
+          </span>
         </h3>
 
         {/* toggle */}

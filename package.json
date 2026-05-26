@@ -11,6 +11,7 @@
   "dependencies": {
     "@dev.icons/react": "^1.1.0",
     "@radix-ui/react-hover-card": "^1.1.15",
+    "@react-oauth/google": "^0.13.5",
     "clsx": "^2.1.1",
     "dotenv": "^17.4.2",
     "lucide-react": "^1.16.0",
