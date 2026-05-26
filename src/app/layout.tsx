@@ -20,18 +20,21 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://scalyui.itsrishabh.tech'),
+  verification: {
+    google: "aFgROXjTSznluBIsgPA92-NGAd3oJX-txnsvHaxRP2U",
+  },
   title: {
     default: "Scaly - Modern URL Shortener",
     template: "%s | Scaly"
   },
   description: "Scaly is a blazing fast, secure, and modern SaaS URL shortener and link management platform.",
   keywords: [
-    "scaly", 
-    "scalyui", 
-    "url shortener", 
-    "link shortener", 
-    "link management", 
-    "custom short links", 
+    "scaly",
+    "scalyui",
+    "url shortener",
+    "link shortener",
+    "link management",
+    "custom short links",
     "qr code generator",
     "click analytics",
     "free url shortener",
