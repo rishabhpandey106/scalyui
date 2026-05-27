@@ -13,6 +13,7 @@ export interface UrlItem {
   Clicks: number;
   CreatedAt: string;
   ShortURL: string;
+  Expiry?: string;
 }
 
 interface UrlTableProps {

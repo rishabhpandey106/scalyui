@@ -13,7 +13,7 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
   const [alias, setAlias] = useState('');
   const [expiry, setExpiry] = useState('');
   const [isChecking, setIsChecking] = useState(false);
-  const [aliasStatus, setAliasStatus] = useState<'available' | 'taken' | 'idle'>('idle');
+  const [aliasStatus, setAliasStatus] = useState<'available' | 'taken' | 'invalid' | 'idle'>('idle');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [result, setResult] = useState<{ shortUrl?: string; code?: string; qrUrl?: string } | null>(null);
@@ -32,7 +32,7 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
         const res = await checkAlias(alias);
         setAliasStatus(res.available ? 'available' : 'taken');
       } catch (err) {
-        setAliasStatus('taken');
+        setAliasStatus('invalid');
       } finally {
         setIsChecking(false);
       }
@@ -48,6 +48,10 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
     }
     if (aliasStatus === 'taken') {
       toast.error('Custom alias is already taken');
+      return;
+    }
+    if (aliasStatus === 'invalid') {
+      toast.error('Custom alias is invalid');
       return;
     }
 
@@ -149,6 +153,7 @@ export default function UrlForm({ onSuccess }: { onSuccess?: () => void }) {
             </div>
             {aliasStatus === 'available' && <p className="text-accent text-xs mt-1" role="status">Alias is available!</p>}
             {aliasStatus === 'taken' && <p className="text-red-500 text-xs mt-1" role="status">Alias is already taken</p>}
+            {aliasStatus === 'invalid' && <p className="text-red-500 text-xs mt-1" role="status">Alias is invalid</p>}
           </div>
 
           <div>
