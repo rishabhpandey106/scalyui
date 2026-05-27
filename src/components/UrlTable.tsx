@@ -28,6 +28,7 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
 
   const [search, setSearch] = useState('');
   const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'most_clicks'>('newest');
+  const [linkType, setLinkType] = useState<'all' | 'permanent' | 'temporary'>('all');
 
   const filteredAndSortedUrls = useMemo(() => {
     let result = [...urls];
@@ -39,6 +40,13 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
         (url.ShortCode && url.ShortCode.toLowerCase().includes(q)) ||
         (url.LongURL && url.LongURL.toLowerCase().includes(q))
       );
+    }
+
+    // Type filter
+    if (linkType === 'permanent') {
+      result = result.filter(url => !url.Expiry);
+    } else if (linkType === 'temporary') {
+      result = result.filter(url => !!url.Expiry);
     }
 
     // Sort
@@ -54,7 +62,7 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
     });
 
     return result;
-  }, [urls, search, sortBy]);
+  }, [urls, search, sortBy, linkType]);
 
   const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -114,28 +122,51 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
   return (
     <div className="space-y-6 pl-2 pr-2 sm:pl-0 sm:pr-0">
       {urls.length > 0 && (
-        <div className="flex flex-col sm:flex-row gap-4 mb-2 pb-6">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={18} />
-            <input
-              type="text"
-              placeholder="Search by alias or long URL..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 pl-10 pr-4 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all"
-            />
+        <div className="flex flex-col gap-4 mb-2 pb-6">
+          <div className="flex flex-col sm:flex-row gap-4 w-full">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={18} />
+              <input
+                type="text"
+                placeholder="Search by alias or long URL..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full bg-zinc-950 border border-zinc-800 rounded-lg py-2 pl-10 pr-4 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all"
+              />
+            </div>
+            <div className="relative shrink-0">
+              <SlidersHorizontal className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={16} />
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as any)}
+                className="appearance-none bg-zinc-950 border border-zinc-800 rounded-lg py-2 pl-10 pr-8 text-sm text-zinc-300 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all cursor-pointer w-full sm:w-auto"
+              >
+                <option value="newest">Newest First</option>
+                <option value="oldest">Oldest First</option>
+                <option value="most_clicks">Most Clicks</option>
+              </select>
+            </div>
           </div>
-          <div className="relative">
-            <SlidersHorizontal className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={16} />
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
-              className="appearance-none bg-zinc-950 border border-zinc-800 rounded-lg py-2 pl-10 pr-8 text-sm text-zinc-300 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all cursor-pointer"
+          
+          <div className="flex bg-zinc-950 border border-zinc-800 rounded-lg p-1 self-start w-full sm:w-auto">
+            <button
+              onClick={() => setLinkType('all')}
+              className={`flex-1 sm:flex-none px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${linkType === 'all' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-zinc-200'}`}
             >
-              <option value="newest">Newest First</option>
-              <option value="oldest">Oldest First</option>
-              <option value="most_clicks">Most Clicks</option>
-            </select>
+              All
+            </button>
+            <button
+              onClick={() => setLinkType('permanent')}
+              className={`flex-1 sm:flex-none px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${linkType === 'permanent' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-zinc-200'}`}
+            >
+              Permanent
+            </button>
+            <button
+              onClick={() => setLinkType('temporary')}
+              className={`flex-1 sm:flex-none px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${linkType === 'temporary' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-zinc-200'}`}
+            >
+              Temporary
+            </button>
           </div>
         </div>
       )}
@@ -179,14 +210,27 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
                 <p className="text-zinc-500 text-sm truncate" title={url.LongURL}>
                   {url.LongURL}
                 </p>
-                <div className="flex items-center gap-4 mt-3 text-xs text-zinc-400">
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-3 text-xs text-zinc-400">
                   <span className="flex items-center gap-1">
                     <BarChart2 size={14} />
                     {url.Clicks ?? 0} clicks
                   </span>
                   {url.CreatedAt && (
-                    <span>
-                      {new Date(url.CreatedAt).toLocaleDateString()}
+                    <span className="flex items-center gap-1">
+                      <span className="w-1 h-1 rounded-full bg-zinc-600 hidden sm:block"></span>
+                      Created: {new Date(url.CreatedAt).toLocaleDateString()}
+                    </span>
+                  )}
+                  {url.Expiry && (
+                    <span className="flex items-center gap-1 text-orange-400/80">
+                      <span className="w-1 h-1 rounded-full bg-zinc-600 hidden sm:block"></span>
+                      Expires: {new Date(url.Expiry).toLocaleString()}
+                    </span>
+                  )}
+                  {!url.Expiry && (
+                    <span className="flex items-center gap-1 text-accent/80">
+                      <span className="w-1 h-1 rounded-full bg-zinc-600 hidden sm:block"></span>
+                      Permanent
                     </span>
                   )}
                 </div>

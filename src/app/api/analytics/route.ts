@@ -1,11 +1,16 @@
 import { NextResponse } from "next/server";
 
-const SHARE_URL = process.env.NEXT_PUBLIC_SHARE_URL || "";
+const SHARE_URL = process.env.NEXT_PUBLIC_SHARE_URL;
 
-const WEBSITE_ID = process.env.NEXT_PUBLIC_WEBSITE_ID || "";
+const WEBSITE_ID = process.env.NEXT_PUBLIC_WEBSITE_ID;
 
 export async function GET() {
     try {
+
+        if (!SHARE_URL || !WEBSITE_ID) {
+            return NextResponse.json({ error: "Missing required environment variables" });
+        }
+
         const tokenRes = await fetch(SHARE_URL, {
             cache: "no-store",
         });
