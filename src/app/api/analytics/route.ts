@@ -43,7 +43,7 @@ export async function GET() {
         return NextResponse.json({
             "Unique Visitors": stats.visitors > stats.visits ? stats.visitors : stats.visits,
             "Total Views": stats.pageviews,
-            "Bounce Rate": Math.round(stats.bounces * 100 / stats.pageviews) + "%",
+            "Bounce Rate": Math.round((stats.bounces / stats.visits) * 100) + "%",
             "Time Range": `${new Date(startAt).toLocaleDateString()} - ${new Date(endAt).toLocaleDateString()}, 1 year`,
         });
     } catch (e) {
