@@ -18,6 +18,7 @@ import QRCard from '@/components/QRCard';
 import ChartSection from '@/components/ChartSection';
 import TopList from '@/components/TopList';
 import Image from 'next/image';
+import FuzzyText from '@/components/ui/FuzzyText';
 
 interface ClickEvent {
   clicked_at: string;
@@ -65,6 +66,7 @@ export default function AnalyticsPage() {
       try {
         const result = await getAnalytics(code);
         setData(result);
+        // throw new Error("Test Error");
       } catch (err: any) {
         setError(err.message || 'Failed to load analytics');
       } finally {
@@ -151,17 +153,36 @@ export default function AnalyticsPage() {
 
         <div className="backdrop-blur-xl bg-white/5 border border-green-500/20 shadow-[0_0_40px_rgba(34,197,94,0.15)] rounded-2xl p-6 md:p-10 flex flex-col items-center gap-5 max-w-md w-full">
 
-          <div className="relative">
-            <Image
+          <div className="relative justify-center items-center flex flex-col gap-4">
+            {/* <Image
               src="/deny.png"
               alt="Access Denied"
               width={300}
               height={300}
               className="rounded-xl object-contain"
-            />
+            /> */}
+
+            <FuzzyText
+              baseIntensity={0.2}
+              hoverIntensity={0.5}
+              enableHover
+              clickEffect={true}
+            >
+              404
+            </FuzzyText>
+
+            <FuzzyText
+              baseIntensity={0.2}
+              hoverIntensity={0.5}
+              enableHover
+              clickEffect={true}
+              fontSize={40}
+            >
+              not found
+            </FuzzyText>
 
             {/* glow effect */}
-            <div className="absolute inset-0 blur-2xl bg-green-500/10 rounded-full" />
+            {/* <div className="absolute inset-0 blur-2xl bg-green-500/10 rounded-full" /> */}
           </div>
         </div>
       </div>
