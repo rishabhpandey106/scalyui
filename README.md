@@ -20,6 +20,7 @@
 - **Link Management**: A dedicated `/links` dashboard with high-performance real-time search and sorting (Newest, Oldest, Most Clicks).
 - **SEO & Social Sharing Optimized**: Fully integrated Open Graph (OG) tags, Twitter Cards, dynamic `sitemap.xml`, and JSON-LD schema markup.
 - **Fully Responsive**: Beautifully optimized for both Desktop and Mobile devices using dynamic layouts.
+- **PDF Upload & Password Protection**: Upload and host secured PDF documents directly on Scaly.
 
 ---
 
