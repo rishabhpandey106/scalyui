@@ -82,9 +82,10 @@ export async function signup(email: string, password: string) {
 // NEW SaaS URL Shortener Endpoints
 // ----------------------------------------------------
 
-export async function shortenUrl(url: string, alias?: string, expiry?: string) {
-  const payload: { url: string; alias?: string; expiry?: string } = { url };
+export async function shortenUrl(url: string, alias?: string, expiry?: string, password?: string) {
+  const payload: { url: string; alias?: string; expiry?: string; password?: string } = { url };
   if (alias) payload.alias = alias;
+  if (password) payload.password = password;
   if (expiry) {
     try {
       payload.expiry = new Date(expiry).toISOString();
@@ -101,6 +102,41 @@ export async function shortenUrl(url: string, alias?: string, expiry?: string) {
   if (!res.ok) {
     const errorData = await res.json().catch(() => null);
     throw new Error(errorData?.error || 'Failed to shorten URL');
+  }
+
+  return res.json();
+}
+
+export async function uploadPdf(file: File, alias?: string, expiry?: string, password?: string) {
+  const formData = new FormData();
+  formData.append('file', file);
+  
+  if (alias) formData.append('alias', alias);
+  if (password) formData.append('password', password);
+  if (expiry) {
+    try {
+      formData.append('expiry', new Date(expiry).toISOString());
+    } catch(e) {
+      formData.append('expiry', expiry);
+    }
+  }
+
+  // Use base fetch logic but without the application/json header enforcing
+  const token = getToken();
+  const headers = new Headers();
+  if (token) {
+    headers.set('Authorization', `Bearer ${token}`);
+  }
+
+  const res = await fetch(`${BASE_URL}/api/v1/upload-pdf`, {
+    method: 'POST',
+    headers, // Omit Content-Type to let the browser automatically set it with the boundary for FormData
+    body: formData,
+  });
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => null);
+    throw new Error(errorData?.error || 'Failed to upload PDF');
   }
 
   return res.json();

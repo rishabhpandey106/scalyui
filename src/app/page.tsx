@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, Zap, QrCode, BarChart2, ShieldCheck, Globe, Link2 } from 'lucide-react';
+import { ArrowRight, Zap, QrCode, BarChart2, ShieldCheck, Globe, Link2, FileText, Lock } from 'lucide-react';
 import { SquigglyText } from '@/components/ui/squiggly-text';
 import ElectricBorder from '@/components/ui/ElectricBorder';
 
@@ -23,7 +23,7 @@ export default function Home() {
         </h1>
 
         <p className="text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto mb-10 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
-          The modern URL shortener built for speed and insights. Create branded links, generate QR codes, and monitor real-time click analytics.
+          The modern URL shortener built for speed and security. Create branded links, securely host PDF documents, protect your links with passwords, and monitor real-time analytics.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center gap-4 animate-in fade-in slide-in-from-bottom-10 duration-700 delay-300 z-10">
@@ -58,7 +58,7 @@ export default function Home() {
             <p className="text-zinc-400 max-w-xl mx-auto">Scaly provides powerful tools to manage and track your links, designed with a premium, lightning-fast interface.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <FeatureCard
               icon={<Link2 className="text-accent" size={24} />}
               title="Custom Aliases"
@@ -75,14 +75,24 @@ export default function Home() {
               description="Instantly generate and download high-quality QR codes for your short links for offline marketing."
             />
             <FeatureCard
-              icon={<Zap className="text-accent" size={24} />}
-              title="Lightning Fast"
-              description="Built on Edge infrastructure. Redirections happen instantly, and the dashboard loads in milliseconds."
+              icon={<FileText className="text-accent" size={24} />}
+              title="PDF Hosting"
+              description="Upload and host PDF documents directly on Scaly. Share them instantly with automatically generated short links."
+            />
+            <FeatureCard
+              icon={<Lock className="text-accent" size={24} />}
+              title="Password Protection"
+              description="Add an extra layer of security. Lock your sensitive URLs and PDF files behind a custom password."
             />
             <FeatureCard
               icon={<ShieldCheck className="text-accent" size={24} />}
               title="Link Expirations"
               description="Set automatic expiration dates for time-sensitive campaigns. Links automatically deactivate when time is up."
+            />
+            <FeatureCard
+              icon={<Zap className="text-accent" size={24} />}
+              title="Lightning Fast"
+              description="Built on Edge infrastructure. Redirections happen instantly, and the dashboard loads in milliseconds."
             />
             <FeatureCard
               icon={<Globe className="text-accent" size={24} />}

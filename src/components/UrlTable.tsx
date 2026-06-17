@@ -2,14 +2,16 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { Copy, Trash2, BarChart2, ExternalLink, CheckCircle2, Search, SlidersHorizontal } from 'lucide-react';
+import { Copy, Trash2, BarChart2, ExternalLink, CheckCircle2, Search, SlidersHorizontal, FileText, Lock } from 'lucide-react';
 import { deleteUrl } from '@/lib/api';
 import toast from 'react-hot-toast';
 import { LinkPreview } from './ui/link-preview';
 
 export interface UrlItem {
   ShortCode: string;
-  LongURL: string;
+  LongURL?: string | null;
+  FilePath?: string | null;
+  IsProtected?: boolean;
   Clicks: number;
   CreatedAt: string;
   ShortURL: string;
@@ -28,7 +30,7 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
 
   const [search, setSearch] = useState('');
   const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'most_clicks'>('newest');
-  const [linkType, setLinkType] = useState<'all' | 'permanent' | 'temporary'>('all');
+  const [linkType, setLinkType] = useState<'all' | 'permanent' | 'temporary' | 'pdf'>('all');
 
   const filteredAndSortedUrls = useMemo(() => {
     let result = [...urls];
@@ -38,7 +40,8 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
       const q = search.toLowerCase();
       result = result.filter(url =>
         (url.ShortCode && url.ShortCode.toLowerCase().includes(q)) ||
-        (url.LongURL && url.LongURL.toLowerCase().includes(q))
+        (url.LongURL && url.LongURL.toLowerCase().includes(q)) ||
+        (url.FilePath && q.includes('pdf'))
       );
     }
 
@@ -47,6 +50,8 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
       result = result.filter(url => !url.Expiry);
     } else if (linkType === 'temporary') {
       result = result.filter(url => !!url.Expiry);
+    } else if (linkType === 'pdf') {
+      result = result.filter(url => !!url.FilePath);
     }
 
     // Sort
@@ -167,6 +172,12 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
             >
               Temporary
             </button>
+            <button
+              onClick={() => setLinkType('pdf')}
+              className={`flex-1 sm:flex-none px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${linkType === 'pdf' ? 'bg-zinc-800 text-white' : 'text-zinc-400 hover:text-zinc-200'}`}
+            >
+              PDFs
+            </button>
           </div>
         </div>
       )}
@@ -197,7 +208,7 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
               <div className="flex-1 min-w-0 relative">
                 <div className="flex items-center gap-3 mb-1 min-w-0 w-full">
                   <LinkPreview
-                    url={url.LongURL}
+                    url={url.LongURL || url.ShortURL}
                     live={url.ShortURL}
                     target="_blank"
                     // rel="noreferrer"
@@ -207,9 +218,15 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
                     <ExternalLink size={14} className="opacity-50 shrink-0" />
                   </LinkPreview>
                 </div>
-                <p className="text-zinc-500 text-sm truncate" title={url.LongURL}>
-                  {url.LongURL}
-                </p>
+                {url.FilePath ? (
+                  <p className="flex items-center gap-1.5 text-accent/90 text-sm truncate bg-accent/10 w-fit px-2 py-0.5 rounded-md border border-accent/20">
+                    <FileText size={14} /> PDF Document
+                  </p>
+                ) : (
+                  <p className="text-zinc-500 text-sm truncate" title={url.LongURL || ''}>
+                    {url.LongURL}
+                  </p>
+                )}
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-3 text-xs text-zinc-400">
                   <span className="flex items-center gap-1">
                     <BarChart2 size={14} />
@@ -231,6 +248,11 @@ export default function UrlTable({ urls, isLoading, onRefresh }: UrlTableProps) 
                     <span className="flex items-center gap-1 text-accent/80">
                       <span className="w-1 h-1 rounded-full bg-zinc-600 hidden sm:block"></span>
                       Permanent
+                    </span>
+                  )}
+                  {url.IsProtected && (
+                    <span className="flex items-center gap-1 text-red-400/90 ml-auto sm:ml-0 bg-red-400/10 px-2 py-0.5 rounded-md border border-red-400/20">
+                      <Lock size={12} /> Protected
                     </span>
                   )}
                 </div>
