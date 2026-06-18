@@ -4,17 +4,19 @@ export const alt = 'Scaly Bio Page';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
-export default async function Image({ params }: { params: { username: string } }) {
+export default async function Image({ params }: { params: Promise<{ username: string }> }) {
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+  
+  const { username } = await params;
   
   let data: any = null;
   try {
-    const res = await fetch(`${API_URL}/bio/${params.username}`, { cache: 'no-store' });
+    const res = await fetch(`${API_URL}/bio/${username}`, { cache: 'no-store' });
     if (res.ok) data = await res.json();
   } catch (e) {}
 
   const themeColor = data?.page?.theme_color || '#22c55e';
-  const title = data?.page?.title || `@${params.username}`;
+  const title = data?.page?.title || `@${username}`;
   const bio = data?.page?.bio_text || 'Check out my links on Scaly.';
   const linkCount = data?.links?.length || 0;
 

@@ -1,10 +1,12 @@
 import { Metadata } from 'next';
 
-export async function generateMetadata({ params }: { params: { username: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ username: string }> }): Promise<Metadata> {
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
   
+  const { username } = await params;
+
   try {
-    const res = await fetch(`${API_URL}/bio/${params.username}`, { cache: 'no-store' });
+    const res = await fetch(`${API_URL}/bio/${username}`, { cache: 'no-store' });
     if (!res.ok) throw new Error();
     
     const data = await res.json();
