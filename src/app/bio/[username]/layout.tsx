@@ -1,5 +1,7 @@
 import { Metadata } from 'next';
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata({ params }: { params: Promise<{ username: string }> }): Promise<Metadata> {
   const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
   

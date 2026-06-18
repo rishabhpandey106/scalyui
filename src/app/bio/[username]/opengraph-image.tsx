@@ -1,5 +1,7 @@
 import { ImageResponse } from 'next/og';
 
+export const dynamic = 'force-dynamic';
+
 export const alt = 'Scaly Bio Page';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
@@ -66,7 +68,7 @@ export default async function Image({ params }: { params: Promise<{ username: st
           </div>
           
           <h1 style={{ fontSize: '56px', fontWeight: 'bold', margin: '0 0 16px 0', color: 'white' }}>
-            {title}
+            {title.toUpperCase()}
           </h1>
           
           <p style={{ fontSize: '32px', color: '#a1a1aa', margin: '0 0 40px 0', maxWidth: '700px', textAlign: 'center', lineHeight: 1.4 }}>
@@ -88,7 +90,7 @@ export default async function Image({ params }: { params: Promise<{ username: st
           </div>
         </div>
         
-        <div style={{ position: 'absolute', bottom: '40px', fontSize: '24px', color: '#71717a', display: 'flex' }}>
+        <div style={{ position: 'absolute', bottom: '40px', fontSize: '24px', color: '#71717a', display: 'flex', paddingBottom: '12px'}}>
           Powered by Scaly
         </div>
       </div>
