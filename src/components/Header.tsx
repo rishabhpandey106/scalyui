@@ -17,6 +17,8 @@ export default function Header() {
         setMounted(true);
     }, [pathname]);
 
+    // if (pathname?.startsWith('/bio/')) return null;
+
     return (
         <header className="flex justify-between items-center mb-2 border-b border-zinc-800 pb-4">
             <Link href="/" className="text-2xl font-bold text-accent tracking-tight hover:opacity-80 transition-opacity">

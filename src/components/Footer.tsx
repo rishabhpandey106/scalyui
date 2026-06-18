@@ -1,10 +1,16 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { GithubIcon, Twitter } from "@dev.icons/react/mono";
 import LinkedInIcon from '@/components/LinkedInIcon';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const pathname = usePathname();
+
+  if (pathname?.startsWith('/bio/')) return null;
 
   return (
     <footer className="sm:max-w-5xl w-full mx-auto border-t border-zinc-800 bg-black py-3 mt-auto">

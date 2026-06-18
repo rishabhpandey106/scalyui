@@ -234,3 +234,72 @@ export async function getQrviaCode(code: string) {
 export async function getOriginalUrl(code: string) {
   window.location.replace(`${BASE_URL}/${code}`);
 }
+
+// ----------------------------------------------------
+// NEW Bio (Linktree Alternative) Endpoints
+// ----------------------------------------------------
+
+export async function updateBioSettings(payload: { username: string; title: string; bio_text: string; theme_color: string }) {
+  const res = await fetchWithAuth('/api/v1/bio', {
+    method: 'POST',
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => null);
+    throw new Error(errorData?.error || 'Failed to update Bio settings');
+  }
+  return res.json();
+}
+
+export async function getBioSettings() {
+  const res = await fetchWithAuth('/api/v1/bio/me', {
+    method: 'GET',
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch bio settings');
+  }
+  return res.json();
+}
+
+export async function addBioLink(url_code: string, title: string) {
+  const res = await fetchWithAuth('/api/v1/bio/links', {
+    method: 'POST',
+    body: JSON.stringify({ url_code, title }),
+  });
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => null);
+    throw new Error(errorData?.error || 'Failed to add link');
+  }
+  return res.json();
+}
+
+export async function toggleBioLink(id: number) {
+  const res = await fetchWithAuth(`/api/v1/bio/links/${id}/toggle`, {
+    method: 'PATCH',
+  });
+  if (!res.ok) {
+    throw new Error('Failed to toggle link');
+  }
+  return res.json();
+}
+
+export async function deleteBioLink(id: number) {
+  const res = await fetchWithAuth(`/api/v1/bio/links/${id}`, {
+    method: 'DELETE',
+  });
+  if (!res.ok) {
+    throw new Error('Failed to delete link');
+  }
+  return res.json();
+}
+
+// Unauthenticated public route
+export async function getPublicBio(username: string) {
+  const res = await fetch(`${BASE_URL}/bio/${username}`, {
+    method: 'GET',
+  });
+  if (!res.ok) {
+    throw new Error('Bio not found');
+  }
+  return res.json();
+}
