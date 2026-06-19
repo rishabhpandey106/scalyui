@@ -9,7 +9,7 @@ export default function StructuredData() {
         "@id": "https://scalyui.itsrishabh.tech/#website",
         "url": "https://scalyui.itsrishabh.tech",
         "name": "Scaly",
-        "description": "Scaly is a blazing fast, secure, and modern SaaS URL shortener and link management platform.",
+        "description": "Scaly is a blazing fast, secure, and modern SaaS URL shortener, Link-in-Bio, and link management platform.",
         "publisher": {
           "@id": "https://scalyui.itsrishabh.tech/#organization"
         }

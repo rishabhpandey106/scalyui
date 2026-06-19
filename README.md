@@ -13,12 +13,13 @@
 
 - **Custom Short Links**: Create branded and memorable short aliases for your long URLs.
 - **Link Expirations**: Set automatic expiration dates (`RFC 3339`) for your links so they deactivate precisely when you want them to.
+- **Link-in-Bio Profiles**: Generate mobile-optimized, themed landing pages to house all your important links. Features dynamic metadata and on-the-fly OpenGraph preview card generation!
 - **QR Code Generation**: Instantly generate downloadable QR codes for your short URLs.
 - **Advanced Analytics Dashboard**: Track your link performance with highly responsive area charts.
   - View data by **Hourly**, **Daily**, or **Weekly** timeframes.
   - Track **Top Countries**, **Top Referrers**, **Browsers**, **Operating Systems**, and **Devices**.
 - **Link Management**: A dedicated `/links` dashboard with high-performance real-time search and sorting (Newest, Oldest, Most Clicks).
-- **SEO & Social Sharing Optimized**: Fully integrated Open Graph (OG) tags, Twitter Cards, dynamic `sitemap.xml`, and JSON-LD schema markup.
+- **SEO & Social Sharing Optimized**: Fully integrated Open Graph (OG) tags, Twitter Cards, dynamic `sitemap.xml`, and JSON-LD schema markup. Includes a dedicated `/docs` hub for massive search visibility.
 - **Fully Responsive**: Beautifully optimized for both Desktop and Mobile devices using dynamic layouts.
 - **PDF Upload & Password Protection**: Upload and host secured PDF documents directly on Scaly.
 

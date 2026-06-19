@@ -22,24 +22,53 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   metadataBase: new URL('https://scalyui.itsrishabh.tech'),
   title: {
-    default: "Scaly - Modern URL Shortener",
+    default: "Scaly - Modern URL Shortener & Link Management Platform",
     template: "%s | Scaly"
   },
-  description: "Scaly is a blazing fast, secure, and modern SaaS URL shortener and link management platform.",
+  description: "Scaly is a blazing fast, secure, and modern SaaS URL shortener, Link-in-Bio, and link management platform.",
   keywords: [
-    "scaly",
-    "scalyui",
     "url shortener",
     "link shortener",
-    "link management",
     "custom short links",
+    "link management",
+    "link analytics",
+    "click tracking",
     "qr code generator",
-    "click analytics",
+    "short url",
+    "short link service",
+    "saas url shortener",
+    "modern url shortener",
     "free url shortener",
-    "golang url shortener",
-    "scaly url shortener",
-    "scaly analytics",
+    "scaly",
+    "scalyui",
+    "free link in bio",
+    "free pdf sharing",
+    "free link management",
+    "free qr code generator",
+    "free link analytics",
+    "free click tracking",
+    "free linktree alternative",
   ],
+  authors: [
+    {
+      name: "Rishabh",
+      url: "https://scalyui.itsrishabh.tech",
+    },
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  creator: "Rishabh",
+  publisher: "Scaly",
+  category: "Technology",
   verification: {
     google: [
       "uwHjxzHO6AdnsQKQ1Q9WyjzH_PfiYImzYjYYkTPhYN8",
@@ -50,8 +79,8 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: "Scaly - Modern URL Shortener",
-    description: "Scaly is a blazing fast, secure, and modern SaaS URL shortener and link management platform.",
+    title: "Scaly - Modern URL Shortener & Link Management Platform",
+    description: "Scaly is a blazing fast, secure, and modern SaaS URL shortener, Link-in-Bio, and link management platform.",
     url: "https://scalyui.itsrishabh.tech",
     siteName: "Scaly",
     images: [
@@ -68,7 +97,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Scaly - Modern URL Shortener",
-    description: "Scaly is a blazing fast, secure, and modern SaaS URL shortener and link management platform.",
+    description: "Scaly is a blazing fast, secure, and modern SaaS URL shortener, Link-in-Bio, and link management platform.",
     images: ["/og-image.png"],
     creator: "@18Rishabh",
   },
