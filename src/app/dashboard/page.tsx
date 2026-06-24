@@ -7,6 +7,7 @@ import { logout } from '@/lib/auth';
 import UrlForm from '@/components/UrlForm';
 import { SquigglyText } from '@/components/ui/squiggly-text';
 import { ArrowRight } from 'lucide-react';
+import CrossPromoAd from '@/components/CrossPromoAd';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -56,6 +57,11 @@ export default function DashboardPage() {
             </div>
 
             <UrlForm />
+            
+            {/* Cypher Cross Promotion Ad */}
+            <div className="mt-8 mb-4">
+              <CrossPromoAd />
+            </div>
           </main>
         </div>
       </div>
