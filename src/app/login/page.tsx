@@ -67,14 +67,24 @@ export default function LoginPage() {
             disabled={isLoading}
           />
           
-          <Input
-            label="Password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="••••••••"
-            disabled={isLoading}
-          />
+          <div className="relative">
+            <Input
+              label="Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              disabled={isLoading}
+            />
+            <div className="absolute right-0 top-0">
+              <Link 
+                href="/forgot-password" 
+                className="text-xs text-accent hover:underline font-medium"
+              >
+                Forgot password?
+              </Link>
+            </div>
+          </div>
 
           <div className="mt-8">
             <Button type="submit" isLoading={isLoading}>
