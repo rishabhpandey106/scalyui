@@ -1,23 +1,46 @@
 'use client';
 
 import Link from 'next/link';
-import { logout, isAuthenticated } from '@/lib/auth';
+import { isAuthenticated, logout } from '@/lib/auth';
 import { SquigglyText } from '@/components/ui/squiggly-text';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import UserDropdown from '@/components/UserDropdown';
+import { getCurrentUser } from '@/lib/api';
 
 export default function Header() {
     const [isAuth, setIsAuth] = useState(false);
     const [mounted, setMounted] = useState(false);
+    const [userData, setUserData] = useState<any>(null);
+    const [isLoadingUser, setIsLoadingUser] = useState(false);
     const pathname = usePathname();
 
     useEffect(() => {
-        // Re-check authentication whenever the route changes (e.g. login -> dashboard)
-        setIsAuth(isAuthenticated());
-        setMounted(true);
-    }, [pathname]);
+        const checkAuth = async () => {
+            const authed = isAuthenticated();
+            setIsAuth(authed);
+            setMounted(true);
 
-    // if (pathname?.startsWith('/bio/')) return null;
+            if (authed) {
+                setIsLoadingUser(true);
+                try {
+                    const user = await getCurrentUser();
+                    setUserData(user);
+                } catch (error) {
+                    // Fail silently. fetchWithAuth already handles 401 Unauthorized by logging out.
+                    // If it's a 500 or 404, we don't want to force log out.
+                    // logout();
+                    console.log('User data fetch failed, but keeping session active.');
+                } finally {
+                    setIsLoadingUser(false);
+                }
+            } else {
+                setUserData(null);
+            }
+        };
+
+        checkAuth();
+    }, [pathname]);
 
     return (
         <header className="flex justify-between items-center mb-2 border-b border-zinc-800 pb-4">
@@ -34,12 +57,16 @@ export default function Header() {
                             <Link href="/dashboard" className="text-sm font-medium text-zinc-300 hover:text-white transition-colors hidden sm:block">
                                 Dashboard
                             </Link>
-                            <button
-                                onClick={logout}
-                                className="text-sm px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors"
-                            >
-                                Log out
-                            </button>
+                            
+                            {isLoadingUser ? (
+                                <div className="w-10 h-10 rounded-full border border-zinc-800 bg-zinc-900 animate-pulse" />
+                            ) : userData ? (
+                                <UserDropdown user={userData} />
+                            ) : (
+                                <Link href="/dashboard" className="text-sm px-4 py-2 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors">
+                                    Dashboard
+                                </Link>
+                            )}
                         </>
                     ) : (
                         <>

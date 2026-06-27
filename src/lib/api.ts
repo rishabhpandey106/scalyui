@@ -78,6 +78,16 @@ export async function signup(email: string, password: string) {
   return res.json();
 }
 
+export async function getCurrentUser() {
+  const res = await fetchWithAuth('/api/v1/auth/me', {
+    method: 'GET',
+  });
+  if (!res.ok) {
+    throw new Error('Failed to fetch user');
+  }
+  return res.json();
+}
+
 // ----------------------------------------------------
 // NEW SaaS URL Shortener Endpoints
 // ----------------------------------------------------
